@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Эстетика Дома — интернет-магазин мебели</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="favicon.svg">
+  <meta name="description" content="Эстетика Дома — интернет-магазин мебели в Казани. Диваны, кухни, шкафы, кровати с доставкой по России. Гарантия до 5 лет.">
+
+  <!-- Preconnect для быстрой загрузки шрифтов и фото -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+
+  <!-- Fallback-шрифт -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Preload критичных ресурсов -->
+  <link rel="preload" href="js/data.js" as="script">
+  <link rel="preload" href="js/app.js" as="script">
+</head>
+<body>
+
+<!-- ТИКЕР -->
+<div class="ticker">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="ct topbar-row">
+    <div class="topbar-left">
+      <span class="city-pick" onclick="City.open()">
+        <svg class="ico ico-14"><use href="#i-pin"/></svg>
+        <span id="cityName">Казань</span>
+        <svg class="ico ico-10"><use href="#i-chev"/></svg>
+      </span>
+      <a onclick="Info.open('shops')">Магазины</a>
+      <a onclick="Delivery.open()">Доставка</a>
+      <a onclick="Info.open('payment')">Оплата</a>
+      <a onclick="Info.open('warranty')">Гарантии</a>
+    </div>
+    <div class="topbar-right">
+      <a href="tel:+78435587508" class="topbar-phone">+7 (843) 558-75-08</a>
+      <a class="topbar-cb" onclick="Modal.open('callModal')">Заказать звонок</a>
+      <span class="topbar-hours">Пн–Вс 9:00–21:00</span>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <!-- Строка 1: лого + навигация + иконки -->
+  <div class="ct header-top">
+    <a href="#" class="logo">
+      <svg class="logo-icon" viewBox="156 156 200 200">
+        <rect x="156" y="156" width="200" height="200" rx="40" fill="#1a3a2e"/>
+        <g transform="translate(176,226)">
+          <rect x="20" y="0" width="120" height="35" rx="8"
+            fill="#d4af7a" stroke="#1a3a2e" stroke-width="2"/>
+          <rect x="15" y="30" width="60" height="25" rx="6"
+            fill="#d4af7a" stroke="#1a3a2e" stroke-width="2"/>
+          <rect x="85" y="30" width="60" height="25" rx="6"
+            fill="#d4af7a" stroke="#1a3a2e" stroke-width="2"/>
+          <path d="M5 25Q0 25 0 30L0 50Q0 55 5 55L15 55 15 30Q15 25 10 25Z"
+            fill="#d4af7a" stroke="#1a3a2e" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M155 25Q160 25 160 30L160 50Q160 55 155 55L145 55 145 30Q145 25 150 25Z"
+            fill="#d4af7a" stroke="#1a3a2e" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M25 55L20 70 25 70 28 55Z"
+            fill="#d4af7a" stroke="#1a3a2e" stroke-width="1.5"/>
+          <path d="M135 55L132 70 137 70 140 55Z"
+            fill="#d4af7a" stroke="#1a3a2e" stroke-width="1.5"/>
+        </g>
+      </svg>
+      <span class="logo-text">Эстетика Дома</span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="#hero">Главная</a>
+      <a href="#about">О нас</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#footer">Контакты</a>
+      <a href="#catalog" class="nav-sale">
+        <svg class="ico ico-14"><use href="#i-bolt"/></svg>
+        Распродажа
+      </a>
+    </nav>
+    <div class="header-icons">
+      <button class="h-btn" onclick="Fav.open()" aria-label="Избранное">
+        <svg class="ico ico-20"><use href="#i-heart"/></svg>
+        <span class="h-badge" id="favBadge"></span>
+      </button>
+      <button class="h-btn" onclick="Modal.open('authModal')"
+        aria-label="Войти">
+        <svg class="ico ico-20"><use href="#i-user"/></svg>
+      </button>
+      <button class="h-btn" onclick="Cart.open()" aria-label="Корзина">
+        <svg class="ico ico-20"><use href="#i-bag"/></svg>
+        <span class="h-badge shown" id="cartBadge">0</span>
+      </button>
+      <button class="h-btn mob-only" onclick="MobMenu.toggle()"
+        aria-label="Меню">
+        <svg class="ico ico-24"><use href="#i-menu"/></svg>
+      </button>
+    </div>
+  </div>
+  <!-- Строка 2: каталог + поиск на всю ширину -->
+  <div class="header-bot">
+    <div class="ct header-bot-row">
+      <button class="cat-btn" onclick="Mega.toggle()">
+        <svg class="ico ico-16"><use href="#i-grid"/></svg>
+        Каталог
+        <svg class="ico ico-10"><use href="#i-chev"/></svg>
+      </button>
+      <div class="header-search" id="headerSearch">
+        <svg class="ico ico-16"><use href="#i-search"/></svg>
+        <input type="text" id="headerQ" placeholder="Искать мебель, диваны, кухни..."
+          oninput="SiteSearch.live()" onfocus="SiteSearch.live()"
+          autocomplete="off">
+        <button class="btn-p btn-sm" onclick="SiteSearch.go()">Найти</button>
+        <div class="search-results" id="searchResults"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- МЕГА-МЕНЮ -->
+<div class="mega-bd" id="megaBd" onclick="Mega.close()"></div>
+<div class="mega" id="megaMenu">
+  <div class="ct mega-grid" id="megaGrid"></div>
+</div>
+
+<!-- HERO SLIDER -->
+<section class="hero" id="hero">
+  <div class="hero-slides" id="heroSlides"></div>
+  <div class="hero-dots" id="heroDots"></div>
+  <button class="hero-arr hero-prev" onclick="HeroSlider.prev()">
+    <svg class="ico ico-20"><use href="#i-chev-l"/></svg>
+  </button>
+  <button class="hero-arr hero-next" onclick="HeroSlider.next()">
+    <svg class="ico ico-20"><use href="#i-chev-r"/></svg>
+  </button>
+</section>
+
+<!-- КАТЕГОРИИ -->
+<section class="cats-sec">
+  <div class="ct">
+    <div class="sec-head center">
+      <h2>Каталог мебели</h2>
+      <p>Выберите категорию — мы подберём лучшие предложения для вас</p>
+    </div>
+    <div class="cats-grid" id="catsGrid"></div>
+  </div>
+</section>
+
+<!-- КАТАЛОГ -->
+<section class="catalog" id="catalog">
+  <div class="ct">
+    <div class="cat-head">
+      <div>
+        <h2>Каталог товаров</h2>
+        <p class="cat-sub" id="catCount">Показано 24 товара</p>
+      </div>
+      <div class="cat-ctrls">
+        <div class="mini-search">
+          <svg class="ico ico-14"><use href="#i-search"/></svg>
+          <input type="text" id="catQ" class="inp inp-mini"
+            placeholder="Поиск..." oninput="Catalog.filter()">
+        </div>
+        <select id="catSort" class="inp inp-sel" onchange="Catalog.filter()">
+          <option value="popular">По популярности</option>
+          <option value="asc">Сначала дешёвые</option>
+          <option value="desc">Сначала дорогие</option>
+          <option value="disc">По скидке</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="chips" id="chips"></div>
+    <div class="filters-row" id="filtersRow">
+      <div class="filter-group">
+        <label class="fg-label">Цена от, ₽</label>
+        <input type="number" class="inp inp-sm" id="priceFrom"
+          placeholder="0" min="0" oninput="Catalog.filter()">
+      </div>
+      <div class="filter-group">
+        <label class="fg-label">Цена до, ₽</label>
+        <input type="number" class="inp inp-sm" id="priceTo"
+          placeholder="100 000" min="0" oninput="Catalog.filter()">
+      </div>
+      <div class="filter-group">
+        <label class="fg-label">Материал</label>
+        <select class="inp inp-sm" id="filterMat"
+          onchange="Catalog.filter()">
+          <option value="">Все материалы</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="fg-label">Цвет</label>
+        <div class="filter-colors" id="filterColors"></div>
+      </div>
+      <div class="filter-group filter-check-group">
+        <label class="chk-label">
+          <input type="checkbox" id="saleOnly"
+            onchange="Catalog.filter()">
+          Только со скидкой
+        </label>
+        <button class="filter-reset"
+          onclick="Catalog.reset()">Сбросить</button>
+      </div>
+    </div>
+    <div class="grid" id="prodGrid"></div>
+    <p class="empty" id="prodEmpty">Ничего не найдено — попробуйте изменить фильтры</p>
+  </div>
+</section>
+
+<!-- О КОМПАНИИ -->
+<section class="about-sec" id="about">
+  <div class="ct about-row">
+    <div class="about-txt" data-anim="up">
+      <h2>О магазине «Эстетика Дома»</h2>
+      <p>Мы — интернет-магазин мебели в Казани. Работаем с
+        проверенными российскими производителями и предлагаем
+        широкий ассортимент: от корпусной мебели для спален
+        и гостиных до кухонных гарнитуров и мягкой мебели.</p>
+      <p>У нас можно заказать мебель с доставкой по Казани
+        и всей России. Мы помогаем подобрать мебель по размерам
+        вашего помещения, организуем доставку и профессиональную
+        сборку. Каждый товар имеет сертификат качества и гарантию
+        от производителя.</p>
+      <div class="about-stats">
+        <div class="stat"><strong>500+</strong><span>выполненных заказов</span></div>
+        <div class="stat"><strong>100+</strong><span>товаров в каталоге</span></div>
+        <div class="stat"><strong>15+</strong><span>фабрик-партнёров</span></div>
+        <div class="stat"><strong>Казань</strong><span>и вся Россия</span></div>
+      </div>
+    </div>
+    <div class="about-pic" data-anim="left">
+      <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&h=450&fit=crop&q=80"
+        alt="Интерьер" loading="lazy" decoding="async">
+    </div>
+  </div>
+</section>
+
+<!-- ПРЕИМУЩЕСТВА -->
+<section class="adv" id="advantages">
+  <div class="ct">
+    <h2 class="sec-title center">Почему нас выбирают</h2>
+    <p class="sec-sub center">Каждый день мы делаем покупку мебели
+      проще, быстрее и приятнее</p>
+    <div class="adv-grid" id="advGrid"></div>
+  </div>
+</section>
+
+<!-- ОТЗЫВЫ -->
+<section class="revs" id="reviews">
+  <div class="ct">
+    <h2 class="sec-title">Отзывы покупателей</h2>
+    <p class="sec-sub">Средняя оценка — <strong>4.8 из 5</strong>
+      на основе 1 936 отзывов</p>
+    <div class="revs-grid" id="revsGrid"></div>
+  </div>
+</section>
+
+<!-- ФОРМА ОТЗЫВА -->
+<section class="rev-form-sec">
+  <div class="ct rev-form-row">
+    <div class="rev-form-info" data-anim="up">
+      <h2>Поделитесь впечатлениями</h2>
+      <p>Ваш отзыв поможет другим покупателям сделать правильный
+        выбор, а нам — стать лучше.</p>
+      <div class="rev-perks">
+        <div class="rev-perk">
+          <svg class="ico ico-20"><use href="#i-shield"/></svg>
+          <div>
+            <strong>Честные отзывы</strong>
+            <span>Все отзывы проходят модерацию — мы публикуем
+              только реальные мнения покупателей</span>
+          </div>
+        </div>
+        <div class="rev-perk">
+          <svg class="ico ico-20"><use href="#i-check"/></svg>
+          <div>
+            <strong>Бонус за отзыв</strong>
+            <span>Оставьте отзыв и получите промокод на скидку
+              5% на следующий заказ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="rev-form-card" data-anim="up" data-delay="100">
+      <form id="revForm" onsubmit="Reviews.submit(event)">
+        <div class="fg">
+          <label class="fg-label">Ваша оценка</label>
+          <div class="stars-row">
+            <div class="stars-pick" id="starsPick"></div>
+            <span class="stars-txt" id="starsTxt">Нажмите для оценки</span>
+          </div>
+        </div>
+        <input class="inp" id="revName" placeholder="Ваше имя" required>
+        <input class="inp" id="revEmail" placeholder="Email (для получения промокода)">
+        <textarea class="inp ta" id="revText"
+          placeholder="Расскажите о вашем опыте покупки..."
+          rows="4" required></textarea>
+        <button class="btn-p w100" type="submit">Отправить отзыв</button>
+      </form>
+      <div class="ok-msg" id="revOk">
+        <svg class="ico ico-48" style="color:var(--g600)"><use href="#i-check"/></svg>
+        <h3>Спасибо за отзыв!</h3>
+        <p>Промокод на скидку 5% отправлен на ваш email</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ПОДПИСКА -->
+<section class="subscribe">
+  <div class="ct">
+    <div class="sub-card">
+      <h2>Получайте скидки первыми</h2>
+      <p>Подпишитесь на рассылку и получите <strong>скидку 10%</strong>
+        на первый заказ. Никакого спама — только выгодные предложения.</p>
+      <form class="sub-form" onsubmit="event.preventDefault()">
+        <input class="inp sub-inp" placeholder="Ваш email" type="email">
+        <button class="btn-or">Подписаться</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ФУТЕР -->
+<footer class="footer" id="footer">
+  <div class="ct footer-grid" id="footerGrid"></div>
+  <div class="ct footer-bot">
+    <p>&copy; 2026 Эстетика Дома. Все права защищены.
+      Цены на сайте не являются публичной офертой.</p>
+  </div>
+</footer>
+
+<!-- МОДАЛКИ -->
+<div class="modal" id="prodModal" onclick="if(event.target===this)Modal.close('prodModal')">
+  <div class="modal-box lg"><button class="modal-x" onclick="Modal.close('prodModal')">&times;</button>
+    <div class="prod-modal" id="prodBody"></div></div></div>
+
+<div class="modal" id="cityModal" onclick="if(event.target===this)Modal.close('cityModal')">
+  <div class="modal-box md"><button class="modal-x" onclick="Modal.close('cityModal')">&times;</button>
+    <div class="modal-inner" id="cityBody"></div></div></div>
+
+<!-- Личный кабинет (демо) -->
+<div class="modal" id="lkModal"
+  onclick="if(event.target===this)Modal.close('lkModal')">
+  <div class="modal-box lg">
+    <button class="modal-x"
+      onclick="Modal.close('lkModal')">&times;</button>
+    <div class="lk" id="lkBody"></div>
+  </div>
+</div>
+
+<div class="modal" id="authModal" onclick="if(event.target===this)Modal.close('authModal')">
+  <div class="modal-box sm">
+    <button class="modal-x" onclick="Modal.close('authModal')">&times;</button>
+    <div class="modal-inner">
+      <h2 class="center">Личный кабинет</h2>
+      <p class="sub-p center">Войдите или зарегистрируйтесь, чтобы
+        отслеживать заказы и получать скидки</p>
+      <div class="auth-tabs">
+        <button class="auth-tab on" onclick="AuthTabs.switch('login',this)">Вход</button>
+        <button class="auth-tab" onclick="AuthTabs.switch('reg',this)">Регистрация</button>
+      </div>
+      <!-- Вход -->
+      <div class="auth-panel" id="authLogin">
+        <input class="inp" placeholder="Email или телефон">
+        <input class="inp" placeholder="Пароль" type="password">
+        <button class="btn-p w100" onclick="LK.demoLogin()">Войти</button>
+        <button class="btn-o w100" style="margin-top:8px"
+          onclick="LK.demoLogin()">Демо-доступ</button>
+        <p class="form-note center">
+          <a style="color:var(--g600);cursor:pointer">Забыли пароль?</a>
+        </p>
+      </div>
+      <!-- Регистрация -->
+      <div class="auth-panel" id="authReg" style="display:none">
+        <input class="inp" placeholder="Ваше имя">
+        <input class="inp" placeholder="Email" type="email">
+        <input class="inp" placeholder="Телефон" type="tel">
+        <input class="inp" placeholder="Придумайте пароль" type="password">
+        <input class="inp" placeholder="Повторите пароль" type="password">
+        <button class="btn-p w100">Зарегистрироваться</button>
+        <p class="form-note center">Нажимая кнопку, вы соглашаетесь с
+          <a style="color:var(--g600);cursor:pointer">условиями использования</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="callModal" onclick="if(event.target===this)Modal.close('callModal')">
+  <div class="modal-box sm"><button class="modal-x" onclick="Modal.close('callModal')">&times;</button>
+    <div class="modal-inner center">
+      <h2>Заказать звонок</h2>
+      <p class="sub-p">Перезвоним в течение 5 минут в рабочее время</p>
+      <div id="cbForm">
+        <input class="inp" placeholder="Ваше имя">
+        <input class="inp" placeholder="+7 (___) ___-__-__" type="tel">
+        <button class="btn-p w100" onclick="Callback.submit()">Перезвоните мне</button>
+      </div>
+      <div class="ok-msg" id="cbOk"><h3>Заявка принята!</h3>
+        <p>Наш менеджер свяжется с вами в ближайшее время</p></div>
+    </div></div></div>
+
+<!-- Доставка (калькулятор) -->
+<div class="modal" id="deliveryModal"
+  onclick="if(event.target===this)Modal.close('deliveryModal')">
+  <div class="modal-box md">
+    <button class="modal-x"
+      onclick="Modal.close('deliveryModal')">&times;</button>
+    <div class="modal-inner" id="deliveryBody"></div>
+  </div>
+</div>
+
+<!-- Корзина (модальное окно) -->
+<div class="modal" id="cartModal"
+  onclick="if(event.target===this)Modal.close('cartModal')">
+  <div class="modal-box modal-cart">
+    <button class="modal-x"
+      onclick="Modal.close('cartModal')">&times;</button>
+    <div class="modal-inner">
+      <h2>Корзина <span id="cartCnt" style="color:var(--gr4);
+        font-size:14px">(0)</span></h2>
+      <div id="cartList" style="margin:16px 0"></div>
+      <div id="cartFoot" style="display:none">
+        <!-- Итого товары -->
+        <div class="cart-sum">
+          <span>Товары:</span><b id="cartSum">0 ₽</b>
+        </div>
+        <!-- Доп. услуги -->
+        <div class="cart-extras">
+          <label class="cart-extra">
+            <input type="checkbox" id="cartAssembly"
+              onchange="CartExtras.update()">
+            <span>Нужна сборка?</span>
+            <span class="cart-extra-price" id="cartAssemblyPrice">0 ₽</span>
+          </label>
+          <div class="cart-extra cart-extra-stack">
+            <label class="cart-extra">
+              <input type="checkbox" id="cartLift"
+                onchange="CartExtras.update()">
+              <span>Подъём на этаж?</span>
+              <span class="cart-extra-price" id="cartLiftPrice">0 ₽</span>
+            </label>
+            <div class="cart-subline" id="cartLiftSub">
+              <span>Этаж:</span>
+              <input type="number" id="cartLiftFloor"
+                min="1" value="1" class="inp inp-xs"
+                oninput="CartExtras.update()">
+              <span class="cart-subhint">300 ₽ за этаж</span>
+            </div>
+          </div>
+        </div>
+        <!-- Доставка встроенная -->
+        <div id="cartDelWrap" class="cart-del-wrap">
+          <div class="cart-del-header"
+            onclick="CartDel.toggle()">
+            <span>Доставка:</span>
+            <span id="cartDelPrice" class="cart-del-val">
+              не рассчитана</span>
+          </div>
+          <div id="cartDelBody" class="cart-del-body"
+            style="display:none">
+            <div class="cart-del-city-wrap">
+              <label class="fg-label">Город доставки</label>
+              <input class="inp inp-sm" id="cartDelCity"
+                placeholder="Начните вводить название города..."
+                oninput="CartDel.suggest()"
+                onfocus="CartDel.suggest()"
+                autocomplete="off">
+              <div class="cart-del-suggest" id="cartDelSug"></div>
+            </div>
+            <div id="cartDelFields">
+              <label class="fg-label">Ваше имя</label>
+              <input class="inp inp-sm" id="cartDelName"
+                placeholder="Как к вам обращаться?">
+              <label class="fg-label">Адрес доставки</label>
+              <input class="inp inp-sm" id="cartDelAddr"
+                placeholder="Улица, дом, квартира, этаж">
+              <div style="display:grid;
+                grid-template-columns:1fr 1fr;gap:8px">
+                <div>
+                  <label class="fg-label">Телефон</label>
+                  <input class="inp inp-sm" id="cartDelPhone"
+                    placeholder="+7 (___) ___-__-__" type="tel">
+                </div>
+                <div>
+                  <label class="fg-label">Время доставки</label>
+                  <select class="inp inp-sm" id="cartDelTime">
+                    <option>Любое время</option>
+                    <option>09:00 – 12:00</option>
+                    <option>12:00 – 15:00</option>
+                    <option>15:00 – 18:00</option>
+                    <option>18:00 – 21:00</option>
+                  </select>
+                </div>
+              </div>
+              <div class="del-map-card" style="margin-top:10px">
+                <div class="del-map-icon">📍</div>
+                <div>
+                  <strong>Адрес на карте</strong>
+                  <span>Проверьте район доставки и подъезд к дому</span>
+                </div>
+              </div>
+              <div class="del-map-embed">
+                <iframe id="cartDelMap"
+                  title="Карта доставки"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  src="about:blank"></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Итоговый чек -->
+        <div class="cart-check">
+          <div class="cart-check-row">
+            <span>Товары</span>
+            <b id="sumGoods">0 ₽</b>
+          </div>
+          <div class="cart-check-row">
+            <span>Сборка</span>
+            <b id="sumAssembly">0 ₽</b>
+          </div>
+          <div class="cart-check-row">
+            <span>Подъём на этаж</span>
+            <b id="sumLift">0 ₽</b>
+          </div>
+          <div class="cart-check-row">
+            <span>Доставка</span>
+            <b id="sumDelivery">0 ₽</b>
+          </div>
+        </div>
+        <!-- Итого с доставкой -->
+        <div class="cart-sum cart-total-final">
+          <span>Итого к оплате:</span>
+          <b id="cartTotalFinal">0 ₽</b>
+        </div>
+        <div class="cart-actions">
+          <button class="btn-p w100" onclick="CartDel.checkout()">Оформить заказ</button>
+          <button class="btn-o w100" onclick="Cart.print()">Распечатать / PDF</button>
+        </div>
+        <button class="cart-clr" onclick="Cart.clear()">Очистить корзину</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Избранное (модальное окно) -->
+<div class="modal" id="favModal"
+  onclick="if(event.target===this)Modal.close('favModal')">
+  <div class="modal-box modal-fav">
+    <button class="modal-x"
+      onclick="Modal.close('favModal')">&times;</button>
+    <div class="modal-inner">
+      <h2>Избранное <span id="favCnt" style="color:var(--gr4);
+        font-size:14px">(0)</span></h2>
+      <div id="favList" style="margin:20px 0"></div>
+    </div>
+  </div>
+</div>
+
+<div class="panel-bd" id="infoBd" onclick="Info.close()"></div>
+<div class="panel panel-w" id="infoPn">
+  <div class="panel-head"><h2 id="infoTitle"></h2>
+    <button class="panel-x" onclick="Info.close()">&times;</button></div>
+  <div class="panel-body" id="infoBody"></div>
+</div>
+
+<!-- МОБИЛЬНОЕ МЕНЮ -->
+<div class="mob-menu" id="mobMenu">
+  <div class="mob-head">
+    <span class="logo-text">Эстетика Дома</span>
+    <button class="mob-x" onclick="MobMenu.toggle()">&times;</button>
+  </div>
+  <nav class="mob-nav" id="mobNav"></nav>
+</div>
+
+<!-- ЧАТ -->
+<button class="chat-fab" id="chatFab" onclick="Chat.toggle()">
+  <span class="chat-pulse"></span>
+  <span class="chat-badge" id="chatBdg">1</span>
+  <svg class="ico ico-26" id="chatIco"><use href="#i-chat"/></svg>
+  <svg class="ico ico-22" id="chatX" style="display:none"><use href="#i-x"/></svg>
+</button>
+<div class="chat-w" id="chatW">
+  <div class="chat-head"><div><strong>Поддержка</strong>
+    <span class="chat-online"><i></i> Онлайн — отвечаем за 2 мин</span></div>
+    <button class="chat-hx" onclick="Chat.toggle()">&times;</button></div>
+  <div class="chat-tabs">
+    <button class="chat-tab on" onclick="Chat.tab('chat',this)">Чат</button>
+    <button class="chat-tab" onclick="Chat.tab('call',this)">Звонок</button></div>
+  <div id="chatPanel">
+    <div class="chat-msgs" id="chatMsgs"></div>
+    <div class="chat-quick" id="chatQuick">
+      <button onclick="Chat.quick('Расскажите о доставке')">Доставка</button>
+      <button onclick="Chat.quick('Какие условия сборки?')">Сборка</button>
+      <button onclick="Chat.quick('Есть ли товар в наличии?')">Наличие</button></div>
+    <div class="chat-inp-row">
+      <input class="inp chat-inp" id="chatInp" placeholder="Напишите сообщение..."
+        onkeydown="if(event.key==='Enter')Chat.send()">
+      <button class="chat-send" onclick="Chat.send()">
+        <svg class="ico ico-16"><use href="#i-send"/></svg></button></div>
+  </div>
+  <div id="chatCallPn" style="display:none">
+    <div class="center" style="padding:24px">
+      <svg class="ico ico-40" style="color:var(--g600)"><use href="#i-phone"/></svg>
+      <h3 style="margin:12px 0 4px">Обратный звонок</h3>
+      <p class="sub-p">Оставьте номер — перезвоним за 2 минуты</p>
+      <input class="inp" placeholder="Ваше имя" style="margin-top:16px">
+      <input class="inp" placeholder="+7 (___) ___-__-__" type="tel">
+      <button class="btn-p w100">Перезвоните мне</button></div></div>
+</div>
+
+<!-- Кнопка наверх -->
+<button class="to-top" id="toTop"
+  onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg class="ico ico-18"><use href="#i-up"/></svg></button>
+
+<!-- Cookie -->
+<div class="cookie" id="cookie">
+  <p>Продолжая пользоваться сайтом, вы соглашаетесь с использованием cookie.
+    <a href="#">Подробнее</a></p>
+  <button class="btn-p btn-sm" onclick="this.parentElement.remove()">Принять</button>
+</div>
+
+<!-- SVG СПРАЙТ -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-chev-l" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></symbol>
+  <symbol id="i-chev-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/></symbol>
+  <symbol id="i-vk" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M21.579 6.855c.14-.465 0-.806-.662-.806h-2.193c-.558
+      0-.813.295-.953.619 0 0-1.115 2.719-2.695 4.482-.51.51-.743.673-.02
+      .673-.279 0-.383-.164-.383-.673V6.855c0-.558-.161-.806-.626-.806H10.5
+      c-.348 0-.558.259-.558.504 0 .528.79.65.871 2.138v3.228c0
+      .707-.128.836-.406.836-.743 0-2.551-2.729-3.624-5.853-.21-.607
+      -.42-.853-.98-.853H3.61c-.627 0-.752.295-.752.619 0 .58.743
+      3.462 3.461 7.271 1.812 2.601 4.363 4.011 6.687 4.011 1.393
+      0 1.565-.313 1.565-.853v-1.966c0-.627.132-.752.575-.752.325
+      0 .883.164 2.183 1.417 1.487 1.487 1.732 2.153 2.569
+      2.153h2.192c.627 0 .94-.313.76-.931-.198-.616-.907-1.51
+      -1.849-2.569-.51-.603-1.277-1.253-1.51-1.579-.326-.417
+      -.233-.603 0-.975 0 0 2.672-3.761 2.95-5.04z"/>
+  </symbol>
+  <symbol id="i-tg" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M9.417 15.181l-.397 5.584c.568
+      0 .814-.244 1.109-.537l2.663-2.545 5.518 4.041c1.012.564
+      1.725.267 1.998-.931L23.93 3.821h.001c.321-1.496-.541
+      -2.081-1.527-1.714l-21.29 8.151c-1.453.564-1.431
+      1.374-.247 1.741l5.443 1.693L18.953
+      5.058c.525-.346 1.003-.154.61.223L9.417 15.18z"/>
+  </symbol>
+  <!-- Мебельные иконки -->
+  <symbol id="i-sofa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="9" width="20" height="8" rx="3"/><rect x="4" y="6" width="5" height="7" rx="2"/><rect x="15" y="6" width="5" height="7" rx="2"/><line x1="5" y1="17" x2="5" y2="19"/><line x1="19" y1="17" x2="19" y2="19"/></symbol>
+  <symbol id="i-chair" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="8" width="12" height="9" rx="3"/><rect x="5" y="5" width="4" height="10" rx="2"/><rect x="15" y="5" width="4" height="10" rx="2"/><line x1="8" y1="17" x2="8" y2="20"/><line x1="16" y1="17" x2="16" y2="20"/></symbol>
+  <symbol id="i-kitchen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="12" x2="22" y2="12"/><rect x="5" y="6" width="4" height="4" rx="1"/><rect x="11" y="6" width="4" height="4" rx="1"/><circle cx="7" cy="16" r="1"/><circle cx="13" cy="16" r="1"/></symbol>
+  <symbol id="i-wardrobe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="2" width="18" height="18" rx="2"/><line x1="12" y1="2" x2="12" y2="20"/><line x1="3" y1="20" x2="3" y2="22"/><line x1="21" y1="20" x2="21" y2="22"/><circle cx="10" cy="11" r=".8"/><circle cx="14" cy="11" r=".8"/></symbol>
+  <symbol id="i-bed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="11" width="20" height="6" rx="2"/><rect x="2" y="7" width="20" height="5" rx="2"/><rect x="2" y="4" width="6" height="5" rx="1"/><line x1="4" y1="17" x2="4" y2="19"/><line x1="20" y1="17" x2="20" y2="19"/></symbol>
+  <symbol id="i-table" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="8" width="20" height="2" rx="1"/><line x1="5" y1="10" x2="5" y2="19"/><line x1="19" y1="10" x2="19" y2="19"/></symbol>
+  <symbol id="i-stool" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="4" width="12" height="4" rx="2"/><rect x="7" y="8" width="10" height="2" rx="1"/><line x1="8" y1="10" x2="8" y2="20"/><line x1="16" y1="10" x2="16" y2="20"/></symbol>
+  <symbol id="i-dresser" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="16" rx="2"/><line x1="3" y1="8" x2="21" y2="8"/><line x1="3" y1="13" x2="21" y2="13"/><circle cx="12" cy="5.5" r=".8"/><circle cx="12" cy="10.5" r=".8"/><circle cx="12" cy="15.5" r=".8"/><line x1="6" y1="19" x2="6" y2="21"/><line x1="18" y1="19" x2="18" y2="21"/></symbol>
+  <symbol id="i-mattress" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="8" width="20" height="8" rx="3"/><rect x="2" y="6" width="20" height="3" rx="1.5"/></symbol>
+  <symbol id="i-shelf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="1"/><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></symbol>
+  <symbol id="i-nightstand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="14" rx="2"/><line x1="4" y1="11" x2="20" y2="11"/><circle cx="12" cy="7.5" r=".8"/><circle cx="12" cy="14.5" r=".8"/><line x1="7" y1="18" x2="7" y2="20"/><line x1="17" y1="18" x2="17" y2="20"/></symbol>
+  <symbol id="i-pouf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="14" rx="8" ry="5"/><ellipse cx="12" cy="10" rx="7" ry="4"/><path d="M5 10v4"/><path d="M19 10v4"/></symbol>
+</svg>
+
+<script src="js/data.js" defer></script>
+<script src="js/delivery.js" defer></script>
+<script src="js/app.js" defer></script>
+</body>
+</html>

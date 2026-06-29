@@ -1,0 +1,43 @@
+# === GZIP СЖАТИЕ ===
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/javascript
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# === КЭШИРОВАНИЕ БРАУЗЕРА ===
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Шрифты — 1 год
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+
+  # Картинки — 1 месяц
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+
+  # CSS и JS — 1 неделя
+  ExpiresByType text/css "access plus 1 week"
+  ExpiresByType application/javascript "access plus 1 week"
+
+  # HTML — без кэша (всегда свежий)
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# === ЗАГОЛОВКИ БЕЗОПАСНОСТИ ===
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Кэш для статики
+  <FilesMatch "\.(css|js|svg|jpg|png|webp|woff2)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+</IfModule>
